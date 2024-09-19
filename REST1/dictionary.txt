@@ -2,3 +2,4 @@ kissa cat
 koti home
 kitara guitar
 auto car
+koira dog
