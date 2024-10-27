@@ -3,63 +3,42 @@ import TutorialDataService from "../services/TutorialService";
 
 const initialState = [];
 
-export const createTutorial = createAsyncThunk(
-  "tutorials/create",
-  async ({ title, description }) => {
-    const res = await TutorialDataService.create({ title, description });
-    return res.data;
-  }
-);
+export const createTutorial = createAsyncThunk("tutorials/create", async ({ title, description }) => {
+  const res = await TutorialDataService.create({ title, description });
+  return res.data;
+});
 
-export const retrieveTutorials = createAsyncThunk(
-  "tutorials/retrieve",
-  async () => {
-    const res = await TutorialDataService.getAll();
-    return res.data;
-  }
-);
+export const retrieveTutorials = createAsyncThunk("tutorials/retrieve", async () => {
+  const res = await TutorialDataService.getAll();
+  return res.data;
+});
 
-export const updateTutorial = createAsyncThunk(
-  "tutorials/update",
-  async ({ id, data }) => {
-    console.log("tutorials.js", data);
-    const res = await TutorialDataService.update(id, data);
-    return res.data;
-  }
-);
+export const updateTutorial = createAsyncThunk("tutorials/update", async ({ id, data }) => {
+  console.log("tutorials.js", data);
+  const res = await TutorialDataService.update(id, data);
+  return res.data;
+});
 
-export const deleteTutorial = createAsyncThunk(
-  "tutorials/delete",
-  async ({ id }) => {
-    await TutorialDataService.remove(id);
-    return { id };
-  }
-);
+export const deleteTutorial = createAsyncThunk("tutorials/delete", async ({ id }) => {
+  await TutorialDataService.remove(id);
+  return { id };
+});
 
-export const deleteAllTutorials = createAsyncThunk(
-  "tutorials/deleteAll",
-  async () => {
-    const res = await TutorialDataService.removeAll();
-    return res.data;
-  }
-);
+export const deleteAllTutorials = createAsyncThunk("tutorials/deleteAll", async () => {
+  const res = await TutorialDataService.removeAll();
+  return res.data;
+});
 
-export const findTutorialsByTitle = createAsyncThunk(
-  "tutorials/findByTitle",
-  async ({ title }) => {
-    const res = await TutorialDataService.findByTitle(title);
-    return res.data;
-  }
-);
+export const findTutorialsByTitle = createAsyncThunk("tutorials/findByTitle", async ({ title }) => {
+  const res = await TutorialDataService.findByTitle(title);
+  return res.data;
+});
 
-export const createComment = createAsyncThunk(
-    "tutorials/comment",
-    async({ data }) => {
-        console.log("tutorials.js", data);
-        const res = await TutorialDataService.createComment(data);
-        return res.data;
-    }
-);
+export const createComment = createAsyncThunk("tutorials/comment", async ({ data }) => {
+  console.log("tutorials.js", data);
+  const res = await TutorialDataService.createComment(data);
+  return res.data;
+});
 
 const tutorialSlice = createSlice({
   name: "tutorial",
@@ -72,7 +51,7 @@ const tutorialSlice = createSlice({
       return [...action.payload];
     },
     [updateTutorial.fulfilled]: (state, action) => {
-      const index = state.findIndex(tutorial => tutorial.id === action.payload.id);
+      const index = state.findIndex((tutorial) => tutorial.id === action.payload.id);
       state[index] = {
         ...state[index],
         ...action.payload,
@@ -89,13 +68,13 @@ const tutorialSlice = createSlice({
       return [...action.payload];
     },
     [createComment.fulfilled]: (state, action) => {
-      const index = state.findIndex(tutorial => tutorial.id === action.payload.tutorialId);
+      const index = state.findIndex((tutorial) => tutorial.id === action.payload.tutorialId);
       if (index !== -1) {
         if (!state[index].comments) {
           state[index].comments = [];
-        };
+        }
         state[index].comments.push(action.payload);
-      };
+      }
     },
   },
 });
